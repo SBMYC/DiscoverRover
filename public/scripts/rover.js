@@ -43,7 +43,9 @@ rover.getQuote = function () {
             format: "jsonp"
         }
     }).then(function (res) {
-        rover.displayQuote(res);
+        if (res.quoteText !== 0) {
+            rover.displayQuote(res);
+        }
     });
 };
 

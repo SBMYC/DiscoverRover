@@ -41,7 +41,9 @@ rover.getQuote = () => {
             format: "jsonp"
         },
     }).then((res) => {
-        rover.displayQuote(res);
+        if(res.quoteText !== 0){
+            rover.displayQuote(res);
+        }
     });
 };
 
