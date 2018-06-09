@@ -22,10 +22,11 @@ rover.getNasa = () => {
             // camera: 'NAVCAM'
         }
     }).then((res) => {
-        console.log(res);
-        setTimeout(function () {
+        if(res.length === 0){
+            rover.getNasa();
+        }else{
             rover.displayNasaImg(res.photos);
-        }, 1000);
+        }
     });
 };
 
@@ -85,15 +86,23 @@ rover.imgContainer = $('.nasa-image-container');
 rover.directImgContainer = $('.nasa-image');
 
 rover.displayNasaImg = (roverImgs) => {
-    let randomIndex = rover.randomNum(roverImgs.length);
-    console.log(randomIndex);
-    
-    const imgChoice = roverImgs[randomIndex].img_src;
-    rover.imgContainer.addClass('show');
-    rover.imgContainer.removeClass('hide');
-    console.log(imgChoice);
-    rover.directImgContainer.html(`<img src="${imgChoice}">
+    console.log(roverImgs);
+    if(roverImgs.length === 0){
+        console.log('img undefined call nasa api again');
+        rover.getNasa();
+    }else{
+        let randomIndex = rover.randomNum(roverImgs.length);
+        console.log(randomIndex);
+        
+        const imgChoice = roverImgs[randomIndex].img_src;
+        console.log(imgChoice);
+        rover.directImgContainer.html(`<img src="${imgChoice}">
         <span class="close-button">&#x2715</span>`);
+        setTimeout(function () {
+            rover.imgContainer.addClass('show');
+            rover.imgContainer.removeClass('hide');
+        }, 100);
+    } 
 };
 
 rover.eventRoverClick = () => {
