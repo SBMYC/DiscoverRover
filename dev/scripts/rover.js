@@ -140,6 +140,7 @@ rover.charge = () => {
     });
 };
 // anime.js ends
+
 rover.chooseRover = () => {
     const roverImg = $('.rover-img');
     if (rover.roverChoice === 'curiosity') {
