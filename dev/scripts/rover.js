@@ -53,7 +53,6 @@ rover.scroll = () => {
     $.jInvertScroll(['.sand', '.pink-container', '.green-container', '.red-container', '.yellow-container', '.milky-way-container', '.stars', '#myCanvas']);
 };
 
-
 //random number generator 
 rover.randomNum = (max) => Math.floor(Math.random() * max);
 
@@ -64,8 +63,7 @@ rover.displayQuote = (quote) => {
     const quoteText = quote.quoteText;
     const quoteAuthor = quote.quoteAuthor;
     const quoteContainer = $('.quote');
-    quoteContainer.empty();
-    quoteContainer.append(`<q>${quoteText}</q> 
+    quoteContainer.empty().append(`<q>${quoteText}</q> 
                         <p>${quoteAuthor}</p>`);
 };
 

@@ -3,8 +3,6 @@
 var rover = {};
 
 rover.roverApiKey = 'lcjdv0yXDikxF5uomOk79VCAgZ1lt1XtEGLxIFmC';
-//rover.introMusic = new Audio('../audio/intro.mp3');
-//rover.bgMusic = new Audio('space.mp3');
 rover.bgMusic = new Howl({
     src: ['space.mp3']
 });
@@ -69,8 +67,7 @@ rover.displayQuote = function (quote) {
     var quoteText = quote.quoteText;
     var quoteAuthor = quote.quoteAuthor;
     var quoteContainer = $('.quote');
-    quoteContainer.empty();
-    quoteContainer.append('<q>' + quoteText + '</q> \n                        <p>' + quoteAuthor + '</p>');
+    quoteContainer.empty().append('<q>' + quoteText + '</q> \n                        <p>' + quoteAuthor + '</p>');
 };
 
 rover.quoteDisplayTimer = function () {
@@ -141,6 +138,7 @@ rover.charge = function () {
     });
 };
 // anime.js ends
+
 rover.chooseRover = function () {
     var roverImg = $('.rover-img');
     if (rover.roverChoice === 'curiosity') {
