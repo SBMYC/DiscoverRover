@@ -2,9 +2,6 @@
 // Space
 //--------
 
-// The amount of symbols on screen
-var count = 300;
-
 // template for circle 
 var path = new Path.Circle({
     center: new Point(0, 0),
@@ -15,9 +12,12 @@ var path = new Path.Circle({
 
 var symbol = new SymbolDefinition(path);
 
+// The amount of symbols on screen
+var count = 300;
+
 // Place the copy of circle
 for (var i = 0; i < count; i++) {
-    // The center position is a random point in the view:
+    // The center position is a random point in the view + each circle's radius is a bit bigger than the last
     var center = Point.random() * view.size;
     var placed = symbol.place(center);
     var scale = (i + 1) / count;
@@ -28,6 +28,7 @@ for (var i = 0; i < count; i++) {
     });
 }
 
+// keepts tracks of where the mouse is so circles can move in opposition to the mouse
 var vector = new Point({
     angle: 45,
     length: 0
@@ -53,7 +54,7 @@ function onFrame(event) {
     }
 }
 
-//keeps snow within view
+// keeps snow within view
 function keepInView(item) {
     var position = item.position;
     var itemBounds = item.bounds;

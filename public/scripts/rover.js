@@ -67,14 +67,15 @@ rover.displayQuote = function (quote) {
     var quoteText = quote.quoteText;
     var quoteAuthor = quote.quoteAuthor;
     var quoteContainer = $('.quote');
-    quoteContainer.empty().append('<q>' + quoteText + '</q> \n                        <p>' + quoteAuthor + '</p>');
+    quoteContainer
+        .empty()
+        .append(`<q> ${quoteText} </q> \n  <p>${quoteAuthor}</p>`)
+        .toggle('.hide');
 };
 
 rover.quoteDisplayTimer = function () {
     setInterval(function () {
         rover.getQuote();
-        var quoteContainer = $('.quote');
-        quoteContainer.toggle('.hide');
     }, 10000);
 };
 
@@ -95,7 +96,7 @@ rover.displayNasaImg = function (roverImgs) {
 
         var imgChoice = roverImgs[randomIndex].img_src;
         console.log(imgChoice);
-        rover.directImgContainer.html('<img src="' + imgChoice + '">\n        <span class="close-button">&#x2715</span>');
+        rover.directImgContainer.html(`<img src="${imgChoice}"> \n <span class="close-button">&#x2715</span>`);
         setTimeout(function () {
             rover.imgContainer.addClass('show');
             rover.imgContainer.removeClass('hide');
