@@ -1,8 +1,6 @@
 const rover = {};
 
 rover.roverApiKey = 'lcjdv0yXDikxF5uomOk79VCAgZ1lt1XtEGLxIFmC'
-//rover.introMusic = new Audio('../audio/intro.mp3');
-//rover.bgMusic = new Audio('space.mp3');
 rover.bgMusic = new Howl({
     src: ['space.mp3']
 });
@@ -22,10 +20,11 @@ rover.getNasa = () => {
             // camera: 'NAVCAM'
         }
     }).then((res) => {
-        console.log(res);
-        setTimeout(function () {
+        if(res.length === 0){
+            rover.getNasa();
+        }else{
             rover.displayNasaImg(res.photos);
-        }, 1000);
+        }
     });
 };
 
@@ -41,7 +40,9 @@ rover.getQuote = () => {
             format: "jsonp"
         },
     }).then((res) => {
-        rover.displayQuote(res);
+        if(res.quoteText !== 0){
+            rover.displayQuote(res);
+        }
     });
 };
 
@@ -51,7 +52,6 @@ rover.getQuote = () => {
 rover.scroll = () => {
     $.jInvertScroll(['.sand', '.pink-container', '.green-container', '.red-container', '.yellow-container', '.milky-way-container', '.stars', '#myCanvas']);
 };
-
 
 //random number generator 
 rover.randomNum = (max) => Math.floor(Math.random() * max);
@@ -63,8 +63,7 @@ rover.displayQuote = (quote) => {
     const quoteText = quote.quoteText;
     const quoteAuthor = quote.quoteAuthor;
     const quoteContainer = $('.quote');
-    quoteContainer.empty();
-    quoteContainer.append(`<q>${quoteText}</q> 
+    quoteContainer.empty().append(`<q>${quoteText}</q> 
                         <p>${quoteAuthor}</p>`);
 };
 
@@ -83,15 +82,23 @@ rover.imgContainer = $('.nasa-image-container');
 rover.directImgContainer = $('.nasa-image');
 
 rover.displayNasaImg = (roverImgs) => {
-    let randomIndex = rover.randomNum(roverImgs.length);
-    console.log(randomIndex);
-    
-    const imgChoice = roverImgs[randomIndex].img_src;
-    rover.imgContainer.addClass('show');
-    rover.imgContainer.removeClass('hide');
-    console.log(imgChoice);
-    rover.directImgContainer.html(`<img src="${imgChoice}">
+    console.log(roverImgs);
+    if(roverImgs.length === 0){
+        console.log('img undefined call nasa api again');
+        rover.getNasa();
+    }else{
+        let randomIndex = rover.randomNum(roverImgs.length);
+        console.log(randomIndex);
+        
+        const imgChoice = roverImgs[randomIndex].img_src;
+        console.log(imgChoice);
+        rover.directImgContainer.html(`<img src="${imgChoice}">
         <span class="close-button">&#x2715</span>`);
+        setTimeout(function () {
+            rover.imgContainer.addClass('show');
+            rover.imgContainer.removeClass('hide');
+        }, 100);
+    } 
 };
 
 rover.eventRoverClick = () => {
@@ -129,6 +136,7 @@ rover.charge = () => {
     });
 };
 // anime.js ends
+
 rover.chooseRover = () => {
     const roverImg = $('.rover-img');
     if (rover.roverChoice === 'curiosity') {
